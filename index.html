@@ -9,7 +9,7 @@
   <script>
     const HOST = location.origin.replace(/^http/, "ws")
     const ws = new WebSocket(HOST);
-    const el;
+    let el;
 
     ws.onmessage = (event) => {
       el = document.getElementById("server-time");
