@@ -5,15 +5,15 @@
 </head>
 
 <body>
-  <p>Server time: <strong id="server-time"></strong></p>
+  <p id="server-time">Server time: Count till 10...</p>
   <script>
-    var HOST = location.origin.replace(/^http/, "ws")
-    var ws = new WebSocket(HOST);
-    var el;
+    const HOST = location.origin.replace(/^http/, "ws")
+    const ws = new WebSocket(HOST);
+    const el;
 
-    ws.onmessage = function (event) {
+    ws.onmessage = (event) => {
       el = document.getElementById("server-time");
-      el.innerHTML = "Server time: " + event.data;
+      el.innerHTML = "Server Time: " + event.data;
     };
   </script>
 </body>
