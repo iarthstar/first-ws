@@ -1,17 +1,41 @@
-const WebSocket = require('ws');
+/**
+ * @file index.js
+ * @description Entry point of App
+ * 
+ * @author Arth Gajjar <iarthstar@gmail.com>
+ * @version 1.0
+ */
 
-const wss = new WebSocket.Server({ port: 8080 });
+
+
+
+//
+// ────────────────────────────────────────────────────────── INIT APP ─────
+//
+
+const utils = require("./utils");
+utils.initApp();
+
+// modules import
+const express = require("express");
+const WebSocket = require("ws");
+
+const PORT = process.env.PORT || 8080;
+const INDEX = "./index.html";
+
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => utils.info('Server', `http://localhost:${PORT}`));
+
+const wss = new WebSocket.Server({ server });
 
 wss.on("connection", (ws) => {
-    console.log(new Date().toISOString(), "Connected to Client");
-    
-    ws.onmessage = (message) => {
-        console.log(new Date().toISOString(), 'Received from Client:', message.data);
-    };
-
-    ws.onclose = (event) => {
-        console.log(new Date().toISOString(), "Disconnected from Client:", event.code, event.reason);
-    };
-
-    ws.send('Hello World!');
+  utils.log("Client connected");
+  ws.on("close", (code, reason) => utils.log("Client disconnected:", code, reason));
 });
+
+setInterval(() => {
+  wss.clients.forEach((client) => {
+    client.send(new Date().toTimeString());
+  });
+}, 10000);
