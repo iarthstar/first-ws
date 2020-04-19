@@ -1,0 +1,13 @@
+{
+  "name": "first-ws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "Arth K. Gajjar",
+    "email": "iarthstar@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.2.3"
+  }
+}
